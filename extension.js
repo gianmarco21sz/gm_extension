@@ -1,5 +1,6 @@
     let arrNodes = [];
     let url = document.URL.split('/');
+    console.log('TEST GIT')
     
     if (url.includes('kanban_deister') && url.includes('kanban') && url.includes('rest')) {
         // Llenar textarea con el formato para imputar horas
