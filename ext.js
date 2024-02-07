@@ -1,3 +1,5 @@
+alert('func')
+
 window.addEventListener("load", function(e) {
     let arrNodes = [];
     let url = document.URL.split('/');
