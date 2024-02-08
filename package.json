@@ -5,7 +5,7 @@
   "main": "extension.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "uglify" : "uglifyjs extension.js -o extension.min.js"
+    "upload" : "uglifyjs extension.js -o extension.min.js && git add . && git commit -m 'minify' && git push"
   },
   "author": "",
   "license": "ISC",
