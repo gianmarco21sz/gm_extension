@@ -34,11 +34,20 @@
             let oldERP = [...document.querySelectorAll('[id*="btnInnerEl"]')].filter(el => el.innerHTML == 'Execute').find( el => !el.closest('.x-panel.x-tabpanel-child.x-panel-default').style['display']  )
 
             let textarea = document.querySelector('textarea');
+
             if (icon) {
                 icon.closest('button').click()
             } else if (barra) {
                 [...barra.getElementsByTagName("button")].at(-1).click();
-                textarea.focus();
+                let modal = document.querySelector('.x-window.x-resizable-pinned');
+                if( modal ){
+                    let tmp_interval = setInterval( () => {
+                        if( modal.style.left.substring(0, modal.style.left.length - 2 ) < 0 ){
+                            textarea.focus();
+                            clearInterval(tmp_interval);
+                        }
+                    })
+                }
             } else if (oldERP) {
                 oldERP.click();
                 // x-item-disabled
