@@ -1,6 +1,5 @@
     let arrNodes = [];
     let url = document.URL.split('/');
-    console.log('TEST GIT')
     
     if (url.includes('kanban_deister') && url.includes('kanban') && url.includes('rest')) {
         // Llenar textarea con el formato para imputar horas
@@ -34,12 +33,13 @@
             //let oldERP = [...document.querySelectorAll('[id*="btnInnerEl"]')].find(el => el.innerHTML == 'Execute');
             let oldERP = [...document.querySelectorAll('[id*="btnInnerEl"]')].filter(el => el.innerHTML == 'Execute').find( el => !el.closest('.x-panel.x-tabpanel-child.x-panel-default').style['display']  )
 
+            let textarea = document.querySelector('textarea');
             if (icon) {
                 icon.closest('button').click()
             } else if (barra) {
                 [...barra.getElementsByTagName("button")].at(-1).click();
+                textarea.focus();
             } else if (oldERP) {
-                let textarea = document.querySelector('textarea');
                 oldERP.click();
                 // x-item-disabled
                 let tmp_interval = setInterval( () => {
