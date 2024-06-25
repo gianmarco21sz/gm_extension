@@ -3,6 +3,9 @@
     "name": "Mi Extensión",
     "version": "1.0",
     "description": "Escucha el evento keypress",
+    "permissions": [
+        "storage"
+    ],
     "content_scripts": [{
         "matches": ["<all_urls>"],
         "js": ["content.js"]
