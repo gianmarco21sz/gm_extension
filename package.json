@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "uglify" : "uglifyjs extension.js -o extension.min.js -m",
-    "upload" : "uglifyjs extension.js -o extension.min.js -m && git add . && git commit -m 'minify' && git push"
+    "copy" : "cp -R ./extension.js ./bk-extension.js",
+    "upload" : "uglifyjs extension.js -o extension.min.js -m && git add . && git commit -m 'minify' && git push origin && npm run copy"
   },
   "author": "",
   "license": "ISC",
