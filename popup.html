@@ -1,13 +1,35 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gestor de Comandos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
-    
-    <input type="text" placeholder="Test....">
+<body class="bg-gray-900 text-gray-200 text-center border rounded-lg border-gray-600" style="width: 50rem;">
 
-    <script src="./popup.js"></script>
+    <h4 class="text-2xl font-bold mb-8">Gestor de Comandos</h4>
+
+    <div class="grid grid-cols-12 gap-4 px-4">
+        <div class="col-span-8 command-list">
+            <!-- Comandos guardados aparecerán aquí -->
+        </div>
+
+        <form id="commandForm" class="col-span-4 bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+            <div class="mb-4">
+                <label for="commandName" class="block">Nombre del Comando</label>
+                <input type="text" id="commandName" class="w-full mt-2 p-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="commandCode" class="block">Código del Comando</label>
+                <textarea id="commandCode" rows="4" class="w-full mt-2 p-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-gray-700 text-white py-2 rounded-lg hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-blue-500">Guardar Comando</button>
+        </form>
+        
+    </div>
+
+   <script src="./popup.js"></script>
 </body>
 </html>
