@@ -1,69 +1,8 @@
 let arrCommands = [];
 
-(() => {
+(async () => {
 
-    if (!chrome.hasOwnProperty('storage')) {
-        return;
-    }
-
-    chrome.storage.sync.get(['username'], async function ({ username }) {
-        if (document.URL != 'https://next.mydeister.com/os/dbstudio#/databases' && !username) {
-            location.href = 'https://next.mydeister.com/os/dbstudio#/databases';
-            return;
-        } else if (document.URL == 'https://next.mydeister.com/os/dbstudio#/databases' && !username) {
-            eval(window.parent.document.querySelector('script').innerHTML.replaceAll('\n', ''))
-            saveUsername(__INITIAL_DATA__.user);
-        }
-
-        if (username) saveUsernameBD(username);
-
-        let validUsername = await validateUsername(username);
-        if (!validUsername.hasOwnProperty('username')) {
-            return alert(`[${username}] no tiene permisos para usar esta extensión.`);
-        }
-        await loadExt();
-    });
-
-
-    function saveUsername(usuario) {
-
-        chrome.storage.sync.set({ 'username': usuario }, async function () {
-            //console.log('Value is set to ' + usuario);
-
-            saveUsernameBD(usuario)
-        });
-    }
-
-    async function saveUsernameBD(usuario) {
-        let res = await fetch('https://script.google.com/macros/s/AKfycbyqPT1A5T5tyKwSjBUestQJmRsCnvCzPNOZ3gQjxqNXRz_ADWaaO8K4rveJTbQ-2Wff/exec',
-            {
-                method: 'POST',
-                body: JSON.stringify({ usuario })
-            }
-        );
-        let data = await res.json();
-        //console.log(data)
-    }
-
-    async function validateUsername(username) {
-        let params = new URLSearchParams();
-        params.append('username', username);
-
-        let res = await fetch(`https://script.google.com/macros/s/AKfycbyqPT1A5T5tyKwSjBUestQJmRsCnvCzPNOZ3gQjxqNXRz_ADWaaO8K4rveJTbQ-2Wff/exec?${params.toString()}`);
-        let data = await res.json();
-
-        return data;
-    }
-
-})()
-
-async function loadExt() {
-
-    chrome.storage.sync.get(['username'], async function ({ username }) {
-        if(username == 'gianmarco.sanchez'){
-            await textblaze();
-        }
-    });
+    await textblaze();
 
     let arrNodes = [];
 
@@ -268,18 +207,6 @@ async function loadExt() {
         clearCache();
     }
 
-    // function autoSelectProy() {
-    //     // PROYECTO
-    //     let proyecto = document.querySelector('[data-ax-id="wic_dbscripts_js_funcs.project_code"]');
-    //     proyecto.value = 'UNDEFINED'
-    //     let inputEvent = new Event('input', {
-    //         bubbles: true,
-    //         cancelable: true,
-    //     });
-    //     proyecto.focus();
-    //     proyecto.dispatchEvent(inputEvent);
-    // }
-
     async function clearCache() {
         let btnDots = document.querySelector('.mdi-dots-vertical');
         if (btnDots) {
@@ -426,25 +353,25 @@ async function loadExt() {
             }
             acum += event.key
             let command = searchInStorage(acum);
-            if ( command ) {
+            if (command) {
                 console.log(event)
                 event.preventDefault();
                 acum = '';
 
-                if( event.target.value ){
+                if (event.target.value) {
                     event.target.value = event.target.value.substring(0, event.target.selectionStart - 2) + command.code;
                     let inputEvent = new Event('input', {
                         bubbles: true,
                         cancelable: true,
                     });
                     event.target.dispatchEvent(inputEvent)
-                }else{
+                } else {
                     event.target.innerHTML = event.target.innerHTML.substring(0, obtenerPosicionCursor(event.target) - 2) + command.code;
 
                     let range = document.createRange();
                     range.selectNodeContents(event.target);
                     range.collapse(false); // Colapsar el rango al final del contenido
-                    
+
                     let selection = window.getSelection();
                     selection.removeAllRanges();
                     selection.addRange(range);
@@ -472,7 +399,7 @@ async function loadExt() {
         })
     }
 
-    
+
 
     function searchInStorage(pCommand) {
         return arrCommands.find(({ name }) => name == pCommand);
@@ -485,12 +412,12 @@ async function loadExt() {
         preRange.selectNodeContents(div);
         preRange.setEnd(range.startContainer, range.startOffset);
         var start = preRange.toString().length;
-    
+
         return start;
     }
-}
+})();
 
-chrome.runtime.onMessage.addListener( async (msgObj) => {
+chrome.runtime.onMessage.addListener(async (msgObj) => {
     console.log('Entra Message Listener', msgObj)
     arrCommands = await getCommands();
 });
@@ -501,7 +428,7 @@ async function getCommands() {
             if (result.commands === undefined) {
                 reject();
             } else {
-                resolve( result.commands );
+                resolve(result.commands);
             }
         });
     });
